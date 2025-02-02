@@ -10,11 +10,10 @@
 
 int main(int argc, char **argv) {
 
-    Parser parser;
-
     Gui &gui = Gui::get();
     gui.init("Hiccup", 1280, 720);
 
+    Parser parser;
     parser.set_gui( &gui );
 
     while (gui.is_open()) {

@@ -1,4 +1,6 @@
 
+SRC_DIR = src
+
 LIBS = 	-L third_party/lib/linux_x86 \
 		-l SDL3 \
 		-l GL \
@@ -9,9 +11,7 @@ INCLUDE = 	-I include \
 			-I /home/sulicat/git/sulicat/sulicat/ \
 			-I third_party/include/imgui \
 
-SRC = 	src/main.cpp \
-		src/parser.cpp \
-		src/gui.cpp
+SRC = $(wildcard $(SRC_DIR)/*.cpp)
 
 all:
 	mkdir -p bin

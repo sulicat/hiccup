@@ -2,6 +2,7 @@
 #include "sulicat.hpp"
 #include <iostream>
 #include <GL/gl.h>
+#include "gui_style.hpp"
 
 #include "imgui.h"
 #include "imgui_impl_sdl3.h"
@@ -58,7 +59,7 @@ void Gui::init(std::string title, int w, int h) {
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
 
-    ImGui::StyleColorsDark();
+    setup_gui_style();
     ImGui_ImplSDL3_InitForOpenGL(window, gl_context);
     ImGui_ImplOpenGL3_Init("#version 130");
 }
@@ -90,7 +91,7 @@ void Gui::step() {
     }
 
     glViewport(0, 0, window_width, window_height);
-    glClearColor(1.0, 0.0, 1.0, 1.0);
+    glClearColor(0.0, 0.0, 0.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
     ImGui_ImplOpenGL3_NewFrame();
@@ -102,8 +103,8 @@ void Gui::step() {
 
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 
-        // Rendering
-        ImGui::Render();
+    // Rendering
+    ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     SDL_GL_SwapWindow(window);
 }
