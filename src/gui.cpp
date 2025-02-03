@@ -1,5 +1,5 @@
 #include "gui.hpp"
-#include "sulicat.hpp"
+#include "ansi.hpp"
 #include <iostream>
 #include <GL/gl.h>
 #include "gui_style.hpp"
@@ -13,7 +13,7 @@ Gui *Gui::_instance = nullptr;
 Gui::Gui() {}
 
 void Gui::_create() {
-    std::cout << sulicat::ansii::GREEN << "[GUI]" << sulicat::ansii::RESET
+    std::cout << sulicat::ansi::GREEN << "[GUI]" << sulicat::ansi::RESET
               << " Creating gui\n";
 }
 

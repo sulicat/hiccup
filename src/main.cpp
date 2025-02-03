@@ -6,15 +6,22 @@
 
 #include "gui.hpp"
 #include "parser.hpp"
-#include "sulicat.hpp"
+#include "ansi.hpp"
+#include "file_utils.hpp"
+#include "input_stream.h"
+
 
 int main(int argc, char **argv) {
+
+    InputStream input_stream(sulicat::file::folder_path("/var/tmp/"));
+    input_stream.run();
+    // input_stream.run_async();
 
     Gui &gui = Gui::get();
     gui.init("Hiccup", 1280, 720);
 
     Parser parser;
-    parser.set_gui( &gui );
+    parser.set_gui(&gui);
 
     while (gui.is_open()) {
 

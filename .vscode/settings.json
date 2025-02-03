@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "fstream": "cpp",
+        "istream": "cpp",
+        "*.tcc": "cpp",
+        "string": "cpp",
+        "streambuf": "cpp",
+        "iosfwd": "cpp",
+        "limits": "cpp",
+        "sstream": "cpp",
+        "stop_token": "cpp",
+        "array": "cpp"
+    }
+}

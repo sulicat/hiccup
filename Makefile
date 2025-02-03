@@ -8,10 +8,12 @@ LIBS = 	-L third_party/lib/linux_x86 \
 
 INCLUDE = 	-I include \
 			-I third_party/include \
-			-I /home/sulicat/git/sulicat/sulicat/ \
+			-I /home/sulicat/git/sulicat/include/ \
 			-I third_party/include/imgui \
 
-SRC = $(wildcard $(SRC_DIR)/*.cpp)
+SRC = 	$(wildcard $(SRC_DIR)/*.cpp ) \
+		/home/sulicat/git/sulicat/src/sync_vector.cpp \
+		/home/sulicat/git/sulicat/src/file_utils.cpp
 
 all:
 	mkdir -p bin
