@@ -4,6 +4,8 @@
 #include <iostream>
 #include <fstream>
 #include <array>
+#include <thread>
+#include <atomic>
 
 class InputStream {
 public:
@@ -11,8 +13,14 @@ public:
 
     InputStream(std::string _path);
     void run();
+    void run_async();
+    void term();
 
 private:
+    std::thread run_t;
+    bool is_running_thread = false;
+    std::atomic<bool> is_running = false;
+
     std::string stream_path;
     std::string command_in_path;
     std::fstream command_in;

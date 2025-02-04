@@ -25,9 +25,9 @@ void InputStream::run() {
 
     command_in.seekg(0, std::ios::end);
     command_in_pos = command_in.tellg(); // start it off at the end
+    is_running = true;
 
-    // now we will spinlock and read the input stream
-    while (true) {
+    while (is_running) {
 
         command_in.seekg(0, std::ios::end);
         std::streampos current_pos = command_in.tellg();
@@ -42,11 +42,19 @@ void InputStream::run() {
 
             command_in_pos = current_pos;
 
-            // sulicat::print_list(input_buff, 0, diff);
             sulicat::print_iterable(input_buff, 0, diff);
-
         }
 
         usleep(1000); // don't spin lock too hard?
     }
+}
+
+void InputStream::run_async() {
+    run_t = std::thread(&InputStream::run, this);
+    is_running_thread = true;
+} 
+
+void InputStream::term() {
+    is_running = false;
+    run_t.join();
 }

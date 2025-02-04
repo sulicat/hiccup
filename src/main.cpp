@@ -9,13 +9,15 @@
 #include "ansi.hpp"
 #include "file_utils.hpp"
 #include "input_stream.h"
-
+#include "input_repl.h"
 
 int main(int argc, char **argv) {
 
     InputStream input_stream(sulicat::file::folder_path("/var/tmp/"));
-    input_stream.run();
-    // input_stream.run_async();
+    input_stream.run_async();
+
+    InputRepl input_repl;
+    input_repl.run_async();
 
     Gui &gui = Gui::get();
     gui.init("Hiccup", 1280, 720);
@@ -24,10 +26,11 @@ int main(int argc, char **argv) {
     parser.set_gui(&gui);
 
     while (gui.is_open()) {
-
         parser.step();
         gui.step();
     }
+
+    input_stream.term();
 
     return 0;
 }
