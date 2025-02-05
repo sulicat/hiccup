@@ -16,10 +16,14 @@ public:
 private:
     Gui();
     void _create();
-    void resize( int _w, int _h );
+    void resize(int _w, int _h);
+    void show_menu_bar();
+    void show_main_window();
 
     // gui data
     bool running = true;
+    bool show_window = true;
+
     // SDL Data
     std::string window_title;
     int window_width;

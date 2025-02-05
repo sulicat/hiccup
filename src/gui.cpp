@@ -98,13 +98,41 @@ void Gui::step() {
     ImGui_ImplSDL3_NewFrame();
     ImGui::NewFrame();
 
-    static bool show_demo_window = true;
-    if (show_demo_window) ImGui::ShowDemoWindow(&show_demo_window);
-
-    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+    this->show_menu_bar();
+    this->show_main_window();
+    // ImGui::ShowDemoWindow();
 
     // Rendering
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     SDL_GL_SwapWindow(window);
+}
+
+void Gui::show_menu_bar() {
+    if (ImGui::BeginMainMenuBar()) {
+
+        if (ImGui::BeginMenu("File")) {
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("Edit")) {
+            if (ImGui::MenuItem("Undo", "CTRL+Z")) {
+            }
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMainMenuBar();
+    }
+}
+
+void Gui::show_main_window() {
+    static ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
+    const ImGuiViewport *viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(viewport->WorkPos);
+    ImGui::SetNextWindowSize(viewport->WorkSize);
+
+    if (ImGui::Begin("Hiccup", &show_window, flags)) {
+
+        ImGui::End();
+    }
 }
