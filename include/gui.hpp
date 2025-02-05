@@ -12,6 +12,7 @@ public:
     void init(std::string title, int w, int h);
     bool is_open();
     void step();
+    void terminate();
 
 private:
     Gui();

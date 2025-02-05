@@ -136,3 +136,14 @@ void Gui::show_main_window() {
         ImGui::End();
     }
 }
+
+void Gui::terminate() {
+    // Cleanup
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplSDL3_Shutdown();
+    ImGui::DestroyContext();
+
+    SDL_GL_DestroyContext(gl_context);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+}

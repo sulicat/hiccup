@@ -13,7 +13,8 @@ INCLUDE = 	-I include \
 
 SRC = 	$(wildcard $(SRC_DIR)/*.cpp ) \
 		/home/sulicat/git/sulicat/src/sync_vector.cpp \
-		/home/sulicat/git/sulicat/src/file_utils.cpp
+		/home/sulicat/git/sulicat/src/file_utils.cpp \
+		/home/sulicat/git/sulicat/src/term.cpp
 
 all:
 	mkdir -p bin

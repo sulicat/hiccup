@@ -54,7 +54,7 @@ void InputStream::run_async() {
     is_running_thread = true;
 } 
 
-void InputStream::term() {
+void InputStream::terminate() {
     is_running = false;
     run_t.join();
 }

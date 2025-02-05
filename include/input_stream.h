@@ -14,7 +14,7 @@ public:
     InputStream(std::string _path);
     void run();
     void run_async();
-    void term();
+    void terminate();
 
 private:
     std::thread run_t;

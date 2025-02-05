@@ -30,7 +30,9 @@ int main(int argc, char **argv) {
         gui.step();
     }
 
-    input_stream.term();
+    gui.terminate();
+    input_stream.terminate();
+    input_repl.terminate();
 
     return 0;
 }
