@@ -10,8 +10,11 @@
 #include "file_utils.hpp"
 #include "input_stream.h"
 #include "input_repl.h"
+#include "async_fifo.hpp"
 
 int main(int argc, char **argv) {
+
+    sulicat::AsyncFifo<std::string> command_fifo;
 
     InputStream input_stream(sulicat::file::folder_path("/var/tmp/"));
     input_stream.run_async();

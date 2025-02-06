@@ -43,16 +43,28 @@ void InputStream::run() {
             command_in_pos = current_pos;
 
             sulicat::print_iterable(input_buff, 0, diff);
+            // TODO: look for new line here, work in cannonical mode
+            if ( has_fifo && fifo != NULL ){
+                fifo->push("SOMETHING");
+            }
+
         }
 
         usleep(1000); // don't spin lock too hard?
     }
 }
 
+void InputStream::assign_command_fifo(sulicat::AsyncFifo<std::string> *fifo_in) {
+    if( fifo_in != NULL ){
+        fifo = fifo_in;
+        has_fifo = true;
+    }
+}
+
 void InputStream::run_async() {
     run_t = std::thread(&InputStream::run, this);
     is_running_thread = true;
-} 
+}
 
 void InputStream::terminate() {
     is_running = false;
