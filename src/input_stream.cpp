@@ -41,21 +41,59 @@ void InputStream::run() {
             }
 
             command_in_pos = current_pos;
+            new_data(&input_buff[0], diff);
 
-            sulicat::print_iterable(input_buff, 0, diff);
-            // TODO: look for new line here, work in cannonical mode
-            if ( has_fifo && fifo != NULL ){
-                fifo->push("SOMETHING");
-            }
-
+            // sulicat::print_iterable(input_buff, 0, diff);
+            // // TODO: look for new line here, work in cannonical mode
+            // if ( has_fifo && fifo != NULL ){
+            //     fifo->push("SOMETHING");
+            // }
         }
 
         usleep(1000); // don't spin lock too hard?
     }
 }
 
+void InputStream::new_data(char *data, int data_size) {
+
+    for (int i = 0; i < data_size; i++) {
+
+        if (data[i] == CHAR_LINE_END) {
+            // check to see if the data we are about to add is within
+            // the total line size
+            if (i + line_buff_i < MAX_LINE_LENGTH) {
+
+                // copy and complete the line
+                memcpy(&line_buff[line_buff_i], data, i);
+                line_buff_i += i;
+                complete_line();
+
+                if (i < data_size - 1) {
+                    // start the next line
+                    memcpy(&line_buff[0], data + i+1, data_size - i);
+                    line_buff_i = data_size - i-1;
+                }
+
+                return;
+            }
+        }
+    }
+
+    // we didn't find a new line, move the whole contents into line if there is space
+    if (data_size + line_buff_i < MAX_LINE_LENGTH) {
+        memcpy(&line_buff[line_buff_i], data, data_size);
+        line_buff_i += data_size;
+    }
+}
+
+void InputStream::complete_line() {
+    std::string s(line_buff.begin(), line_buff.begin() + line_buff_i);
+    std::cout << "NEW STRING: " << s << "\n";
+    line_buff_i = 0;
+}
+
 void InputStream::assign_command_fifo(sulicat::AsyncFifo<std::string> *fifo_in) {
-    if( fifo_in != NULL ){
+    if (fifo_in != NULL) {
         fifo = fifo_in;
         has_fifo = true;
     }
