@@ -9,6 +9,7 @@
         "limits": "cpp",
         "sstream": "cpp",
         "stop_token": "cpp",
-        "array": "cpp"
+        "array": "cpp",
+        "iostream": "cpp"
     }
 }

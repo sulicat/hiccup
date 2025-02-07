@@ -17,6 +17,7 @@ int main(int argc, char **argv) {
     sulicat::AsyncFifo<std::string> command_fifo;
 
     InputStream input_stream(sulicat::file::folder_path("/var/tmp/"));
+    input_stream.assign_command_fifo(&command_fifo);
     input_stream.run_async();
 
     InputRepl input_repl;
@@ -29,6 +30,11 @@ int main(int argc, char **argv) {
     parser.set_gui(&gui);
 
     while (gui.is_open()) {
+        while(command_fifo.size() > 0){
+            std::string command = command_fifo.pop();
+            std::cout << "COMMAND: " << command << "\n";
+        }
+
         parser.step();
         gui.step();
     }

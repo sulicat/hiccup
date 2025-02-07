@@ -88,7 +88,9 @@ void InputStream::new_data(char *data, int data_size) {
 
 void InputStream::complete_line() {
     std::string s(line_buff.begin(), line_buff.begin() + line_buff_i);
-    std::cout << "NEW STRING: " << s << "\n";
+    if( has_fifo && fifo != NULL ){
+        fifo->push(s); 
+    }
     line_buff_i = 0;
 }
 
