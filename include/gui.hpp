@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <string>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
@@ -26,8 +27,10 @@ private:
     Gui();
     void _create();
     void resize(int _w, int _h);
+
     void show_menu_bar();
     void show_main_window();
+    void show_debug();
 
     // gui data
     bool running = true;

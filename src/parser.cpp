@@ -39,7 +39,7 @@ void Parser::parse_tokens(std::vector<std::string> &tokens) {
     }
 }
 
-void command_tab(std::string tab_name) {
+void Parser::command_tab(std::string tab_name) {
     if (gui == NULL || !has_gui)
         return;
 

@@ -1,6 +1,9 @@
+#include <iostream>
+#include <algorithm>
+#include <functional>
+
 #include "gui.hpp"
 #include "ansi.hpp"
-#include <iostream>
 #include <GL/gl.h>
 #include "gui_style.hpp"
 
@@ -100,6 +103,7 @@ void Gui::step() {
 
     this->show_menu_bar();
     this->show_main_window();
+    this->show_debug();
     // ImGui::ShowDemoWindow();
 
     // Rendering
@@ -108,10 +112,31 @@ void Gui::step() {
     SDL_GL_SwapWindow(window);
 }
 
+void Gui::show_debug() {
+    ImGui::Begin("Debug", NULL);
+
+    ImGui::Text("Active Tab: %d\n", active_tab);
+
+    ImGui::End();
+}
+
 void Gui::show_menu_bar() {
     if (ImGui::BeginMainMenuBar()) {
 
         if (ImGui::BeginMenu("File")) {
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("View")) {
+
+            if (ImGui::BeginMenu("Tabs")) {
+
+                for (auto it = tabs.begin(); it != tabs.end(); it++) {
+                    ImGui::MenuItem(it->name.c_str(), "", &it->visible);
+                }
+                ImGui::EndMenu();
+            }
+
             ImGui::EndMenu();
         }
 
@@ -132,15 +157,42 @@ void Gui::show_main_window() {
     ImGui::SetNextWindowSize(viewport->WorkSize);
 
     if (ImGui::Begin("Hiccup", &show_window, flags)) {
+        // Tabs
+
+        if (ImGui::BeginTabBar("Tabs", ImGuiTabBarFlags_None)) {
+
+            for (auto it = tabs.begin(); it != tabs.end(); it++) {
+                if (ImGui::BeginTabItem(it->name.c_str(), &it->visible)) {
+                    ImGui::EndTabItem();
+                }
+            }
+            ImGui::EndTabBar();
+        }
 
         ImGui::End();
     }
 }
 
-void Gui::set_tab( std::string _tab_name){
-    
-}
+void Gui::set_tab(std::string _tab_name) {
+    // find the tab with that name
 
+    auto it_tab = std::find_if(tabs.begin(), tabs.end(), [_tab_name](TabInfo &elem) {
+        return elem.name == _tab_name;
+    });
+
+    TabInfo *tab = NULL;
+
+    if (it_tab == tabs.end()) {
+        // create new tab
+        tabs.push_back(TabInfo{.name = _tab_name,
+                               .visible = true});
+        tab = &tabs.back();
+        active_tab = tabs.size() - 1;
+    } else {
+        tab = &(*it_tab);
+        active_tab = it_tab - tabs.begin();
+    }
+}
 
 void Gui::terminate() {
     // Cleanup
