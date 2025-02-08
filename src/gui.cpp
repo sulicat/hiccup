@@ -182,6 +182,16 @@ void Gui::set_tab(std::string _tab_name) {
 
     TabInfo *tab = NULL;
 
+    // we want to create and update the tab if the tab targeted does not exist
+    // if _tab_name is "", then the user did not use a specific tabname
+    //  in that case if there are no tabs, then create a default one
+
+    if (_tab_name == "" && tabs.size() <= 0) {
+        _tab_name = "default";
+    } else if (_tab_name == "") {
+        return;
+    }
+
     if (it_tab == tabs.end()) {
         // create new tab
         tabs.push_back(TabInfo{.name = _tab_name,

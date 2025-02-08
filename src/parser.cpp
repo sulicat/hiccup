@@ -33,8 +33,14 @@ void Parser::parse_tokens(std::vector<std::string> &tokens) {
     }
 
     if (tokens.size() == 1) {
+
         if (first_arg.size() == 2) {
+            // HICCUP#___ command
             command_tab(first_arg[1]);
+
+        } else if (first_arg.size() == 1) {
+            // HICCUP COMMAND
+            command_tab("");
         }
     }
 }
