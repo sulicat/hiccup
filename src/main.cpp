@@ -30,9 +30,10 @@ int main(int argc, char **argv) {
     parser.set_gui(&gui);
 
     while (gui.is_open()) {
+
+        // flush the commands
         while(command_fifo.size() > 0){
-            std::string command = command_fifo.pop();
-            std::cout << "COMMAND: " << command << "\n";
+            parser.new_command( command_fifo.pop() );
         }
 
         parser.step();

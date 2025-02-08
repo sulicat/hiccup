@@ -7,12 +7,20 @@
 // singleton class to handle the window and guid events
 class Gui {
 public:
+
+    struct TabInfo{
+        std::string name;
+        bool visible;
+    };
+
     static Gui &get();
 
     void init(std::string title, int w, int h);
     bool is_open();
     void step();
     void terminate();
+
+    void set_tab( std::string _tab_name);
 
 private:
     Gui();
@@ -24,6 +32,8 @@ private:
     // gui data
     bool running = true;
     bool show_window = true;
+    std::vector<TabInfo> tabs;
+    int active_tab = -1;
 
     // SDL Data
     std::string window_title;

@@ -137,6 +137,11 @@ void Gui::show_main_window() {
     }
 }
 
+void Gui::set_tab( std::string _tab_name){
+    
+}
+
+
 void Gui::terminate() {
     // Cleanup
     ImGui_ImplOpenGL3_Shutdown();
