@@ -22,6 +22,8 @@ public:
     void terminate();
 
     void set_tab( std::string _tab_name);
+    void label( std::string name, std::string data );
+    void num_float( std::string name, float data );
 
 private:
     Gui();

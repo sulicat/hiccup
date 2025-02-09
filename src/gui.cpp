@@ -174,6 +174,15 @@ void Gui::show_main_window() {
     }
 }
 
+void Gui::label(std::string name, std::string data){
+    std::cout << "GUI LABEL: " << name << " " << data << "\n";
+}
+
+void Gui::num_float(std::string name, float data){
+    std::cout << "GUI FLOAT: " << name << " " << data << "\n";
+
+}
+
 void Gui::set_tab(std::string _tab_name) {
     // find the tab with that name
 

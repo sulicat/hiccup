@@ -23,6 +23,8 @@ public:
     TokAttributes extract_attributes( std::string token );
 
     void command_tab( std::string tab_name );
+    void command_label( TokAttributes command, std::string data );
+    void command_float( TokAttributes command, std::string data );
 
 private:
     Gui *gui = NULL;

@@ -34,6 +34,31 @@ void Parser::parse_tokens(std::vector<std::string> &tokens) {
 
     TokAttributes hiccaup_attr = extract_attributes(tokens[0]);
     command_tab(hiccaup_attr["id"]); // create or set the tab to the commanded tab
+
+    // a valid command has more than 1 token (HICCAUP + COMMAND)
+    if (tokens.size() <= 1)
+        return;
+
+    // TODO: suli single command tokens here
+
+    // 3 token commands
+    if (tokens.size() <= 2)
+        return;
+
+    TokAttributes command = extract_attributes(tokens[1]);
+    if (command["token"] == "LABEL") {
+        command_label(command, tokens[2]);
+    } else if (command["token"] == "FLOAT") {
+        command_float(command, tokens[2]);
+    }
+}
+
+void Parser::command_label(TokAttributes command, std::string data) {
+    gui->label(command["id"], data);
+}
+
+void Parser::command_float(TokAttributes command, std::string data) {
+    gui->num_float(command["id"], std::atof(data.c_str()));
 }
 
 void Parser::command_tab(std::string tab_name) {
@@ -56,6 +81,8 @@ Parser::TokAttributes Parser::extract_attributes(std::string token) {
     out["id"] = DEFAULT_TAB;
 
     std::vector<std::string> token_attr = sulicat::string_split(token, "#");
+    out["token"] = token_attr[0]; // the token itself
+
     if (token_attr.size() == 2) {
         // TODO: suli add the style attributes and what not
         // for now assume the ID is all that follows
