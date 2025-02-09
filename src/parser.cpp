@@ -32,17 +32,8 @@ void Parser::parse_tokens(std::vector<std::string> &tokens) {
         return; // case where this wasn't a command.
     }
 
-    if (tokens.size() == 1) {
-
-        if (first_arg.size() == 2) {
-            // HICCUP#___ command
-            command_tab(first_arg[1]);
-
-        } else if (first_arg.size() == 1) {
-            // HICCUP COMMAND
-            command_tab("");
-        }
-    }
+    TokAttributes hiccaup_attr = extract_attributes(tokens[0]);
+    command_tab(hiccaup_attr["id"]); // create or set the tab to the commanded tab
 }
 
 void Parser::command_tab(std::string tab_name) {
@@ -54,6 +45,24 @@ void Parser::command_tab(std::string tab_name) {
 
 std::vector<std::string> Parser::get_tokens(const std::string &_in_command) {
     return sulicat::string_split(_in_command, " ");
+}
+
+Parser::TokAttributes Parser::extract_attributes(std::string token) {
+    // TOKEN could looks something like this:
+    //  TOK
+    //  TOK#myid,color=red,age=5 // with ID
+
+    TokAttributes out;
+    out["id"] = DEFAULT_TAB;
+
+    std::vector<std::string> token_attr = sulicat::string_split(token, "#");
+    if (token_attr.size() == 2) {
+        // TODO: suli add the style attributes and what not
+        // for now assume the ID is all that follows
+        out["id"] = token_attr[1];
+    }
+
+    return out;
 }
 
 void Parser::set_gui(Gui *_gui) {

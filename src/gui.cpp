@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <functional>
 
+#include "parser.hpp"
 #include "gui.hpp"
 #include "ansi.hpp"
 #include <GL/gl.h>
@@ -186,9 +187,9 @@ void Gui::set_tab(std::string _tab_name) {
     // if _tab_name is "", then the user did not use a specific tabname
     //  in that case if there are no tabs, then create a default one
 
-    if (_tab_name == "" && tabs.size() <= 0) {
+    if (_tab_name == Parser::DEFAULT_TAB && tabs.size() <= 0) {
         _tab_name = "default";
-    } else if (_tab_name == "") {
+    } else if (_tab_name == Parser::DEFAULT_TAB) {
         return;
     }
 
